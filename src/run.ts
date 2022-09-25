@@ -17,6 +17,7 @@ export const run = async (inputs: Inputs): Promise<void> => {
   })
   core.startGroup('getDeployments')
   core.info(JSON.stringify(deployments, undefined, 2))
+  core.endGroup()
 
   const outdatedIDs = findOutdated(deployments)
   core.info(`Deleting outdated ${outdatedIDs.length} deployment(s)`)
