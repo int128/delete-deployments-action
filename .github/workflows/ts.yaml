@@ -33,10 +33,9 @@ jobs:
       - run: yarn build
       - run: yarn package
 
+      - uses: int128/deployment-action@v1
       - name: e2e-test
         uses: ./
-        with:
-          name: foo
 
   generate:
     runs-on: ubuntu-latest

@@ -1,10 +1,11 @@
-name: typescript-action
+name: delete-deployments-action
 description: Template of TypeScript Action
 
 inputs:
-  name:
-    description: example input
+  token:
+    description: GitHub token
     required: true
+    default: ${{ github.token }}
 
 runs:
   using: 'node16'
