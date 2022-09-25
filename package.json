@@ -7,12 +7,20 @@
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint **/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
-    "test": "jest"
+    "test": "jest",
+    "graphql-codegen": "graphql-codegen --config graphql-codegen.yaml"
   },
   "dependencies": {
-    "@actions/core": "1.9.1"
+    "@actions/core": "1.9.1",
+    "@actions/github": "5.1.0",
+    "graphql": "16.6.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "2.12.1",
+    "@graphql-codegen/import-types-preset": "2.2.3",
+    "@graphql-codegen/typescript": "2.7.3",
+    "@graphql-codegen/typescript-operations": "2.5.3",
+    "@octokit/graphql-schema": "12.7.1",
     "@tsconfig/node16": "1.0.3",
     "@types/jest": "29.0.3",
     "@types/node": "16.11.60",
