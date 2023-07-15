@@ -181,7 +181,7 @@ test('run successfully', () => {
       rateLimit: {
         cost: 1,
       },
-    })
+    }),
   ).toStrictEqual([
     'DE_kwDOEx5AOc4nK0tU',
     'DE_kwDOEx5AOc4nK0tZ',
