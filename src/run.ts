@@ -29,14 +29,13 @@ const deleteInBatch = async (octokit: Octokit, inputs: Inputs): Promise<void> =>
   for (let after: string | null | undefined; ; ) {
     const { data: rateLimit } = await octokit.rest.rateLimit.get()
     core.info(`Rate limit remaining (core): ${rateLimit.resources.core.remaining}`)
-    if (rateLimit.resources.graphql) {
-      core.info(`Rate limit remaining (graphql): ${rateLimit.resources.graphql.remaining}`)
-    }
+    assert(rateLimit.resources.graphql !== undefined)
+    core.info(`Rate limit remaining (graphql): ${rateLimit.resources.graphql.remaining}`)
     if (rateLimit.resources.core.remaining < inputs.batchDeletionRateLimit) {
       core.warning(`Exiting to avoid hitting the rate limit of the REST API`)
       return
     }
-    if (rateLimit.resources.graphql && rateLimit.resources.graphql.remaining < inputs.batchDeletionRateLimit) {
+    if (rateLimit.resources.graphql.remaining < inputs.batchDeletionRateLimit) {
       core.warning(`Exiting to avoid hitting the rate limit of the GraphQL API`)
       return
     }
