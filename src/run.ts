@@ -1,7 +1,8 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import { DeploymentsQuery } from './generated/graphql'
-import { deleteDeployment, getDeployments } from './queries/deployments'
+import { GetDeploymentsQuery } from './generated/graphql'
+import { getDeployments } from './queries/getDeployments'
+import { deleteDeployment } from './queries/deleteDeployment'
 
 type Inputs = {
   token: string
@@ -28,7 +29,7 @@ export const run = async (inputs: Inputs): Promise<void> => {
   }
 }
 
-export const findOutdated = (q: DeploymentsQuery) => {
+export const findOutdated = (q: GetDeploymentsQuery) => {
   if (q.repository == null) {
     throw new Error(`q.repository === ${String(q.repository)}`)
   }
