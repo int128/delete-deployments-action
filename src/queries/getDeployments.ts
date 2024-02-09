@@ -4,13 +4,17 @@ import { GetDeploymentsQuery, GetDeploymentsQueryVariables } from '../generated/
 type Octokit = InstanceType<typeof GitHub>
 
 const query = /* GraphQL */ `
-  query getDeployments($owner: String!, $name: String!) {
+  query getDeployments($owner: String!, $name: String!, $after: String) {
     rateLimit {
       cost
     }
     repository(owner: $owner, name: $name) {
-      deployments(first: 100) {
+      deployments(first: 100, after: $after) {
         totalCount
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
         nodes {
           id
           databaseId
