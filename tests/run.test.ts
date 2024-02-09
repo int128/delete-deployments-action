@@ -6,6 +6,7 @@ test('run successfully', () => {
     findOutdated({
       repository: {
         deployments: {
+          totalCount: 20,
           nodes: [
             {
               id: 'DE_kwDOEx5AOc4nK0tU',
