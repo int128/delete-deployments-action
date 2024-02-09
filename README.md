@@ -18,7 +18,7 @@ jobs:
   delete:
     runs-on: ubuntu-latest
     steps:
-      - uses: int128/delete-deployments-action@v0
+      - uses: int128/delete-deployments-action@v1
 ```
 
 ## Batch deletion
@@ -30,7 +30,7 @@ jobs:
   delete:
     runs-on: ubuntu-latest
     steps:
-      - uses: int128/delete-deployments-action@v0
+      - uses: int128/delete-deployments-action@v1
         with:
           # Perform the batch deletion while the rate limit remaining > 100
           batch-deletion-rate-limit: 100
