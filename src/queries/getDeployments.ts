@@ -13,6 +13,7 @@ const query = /* GraphQL */ `
         totalCount
         nodes {
           id
+          databaseId
           environment
           state
           ref {
