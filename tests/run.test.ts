@@ -40,7 +40,7 @@ test('run successfully', () => {
       rateLimit: {
         cost: 1,
       },
-    })
+    }),
   ).toStrictEqual([
     {
       id: 'DE_kwDOEx5AOc4nK0tU',
