@@ -1,7 +1,10 @@
 name: delete-deployments-action
-description: Template of TypeScript Action
+description: Delete the outdated Deployments
 
 inputs:
+  batch-deletion-rate-limit:
+    description: If set, perform the batch deletion while the rate limit is remaining
+    required: false
   token:
     description: GitHub token
     required: true

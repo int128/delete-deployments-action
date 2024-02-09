@@ -1,8 +1,12 @@
 import * as core from '@actions/core'
+import * as github from '@actions/github'
 import { run } from './run'
 
 const main = async (): Promise<void> => {
   await run({
+    batchDeletionRateLimit: parseInt(core.getInput('batch-deletion-rate-limit')),
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
     token: core.getInput('token', { required: true }),
   })
 }
