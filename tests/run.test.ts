@@ -7,6 +7,9 @@ test('run successfully', () => {
       repository: {
         deployments: {
           totalCount: 20,
+          pageInfo: {
+            hasNextPage: false,
+          },
           nodes: [
             {
               id: 'DE_kwDOEx5AOc4nK0tU',
@@ -37,7 +40,7 @@ test('run successfully', () => {
       rateLimit: {
         cost: 1,
       },
-    }),
+    })
   ).toStrictEqual([
     {
       id: 'DE_kwDOEx5AOc4nK0tU',
