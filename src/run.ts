@@ -49,9 +49,8 @@ const deleteInBatch = async (octokit: Octokit, inputs: Inputs): Promise<void> =>
 }
 
 const deletePerPage = async (octokit: Octokit, v: GetDeploymentsQueryVariables) => {
-  core.info(`Get deployments`)
-  const deployments = await getDeployments(octokit, v)
   core.startGroup('getDeployments')
+  const deployments = await getDeployments(octokit, v)
   core.info(JSON.stringify(deployments, undefined, 2))
   core.endGroup()
   assert(deployments.repository != null)
@@ -59,23 +58,25 @@ const deletePerPage = async (octokit: Octokit, v: GetDeploymentsQueryVariables) 
   const outdatedDeployments = findOutdated(deployments)
   core.info(`Deleting outdated ${outdatedDeployments.length} deployment(s)`)
   for (const outdated of outdatedDeployments) {
-    if (outdated.state === DeploymentState.Active) {
-      // An active deployment cannot be deleted directly.
-      // https://docs.github.com/en/rest/deployments/deployments?apiVersion=2022-11-28#delete-a-deployment
-      core.info(`Creating an inactive status before deleting the active deployment ${outdated.databaseId}`)
-      await octokit.rest.repos.createDeploymentStatus({
-        owner: v.owner,
-        repo: v.name,
-        deployment_id: outdated.databaseId,
-        state: 'inactive',
-      })
-    }
-
-    core.info(`Deleting the deployment ${outdated.id}`)
-    await deleteDeployment(octokit, { id: outdated.id })
+    await deleteOne(octokit, v, outdated)
   }
-
   return deployments.repository.deployments.pageInfo
+}
+
+const deleteOne = async (octokit: Octokit, v: GetDeploymentsQueryVariables, outdated: OutdatedDeployment) => {
+  if (outdated.state === DeploymentState.Active) {
+    // An active deployment cannot be deleted directly.
+    // https://docs.github.com/en/rest/deployments/deployments?apiVersion=2022-11-28#delete-a-deployment
+    core.info(`Creating an inactive status before deleting the active deployment ${outdated.databaseId}`)
+    await octokit.rest.repos.createDeploymentStatus({
+      owner: v.owner,
+      repo: v.name,
+      deployment_id: outdated.databaseId,
+      state: 'inactive',
+    })
+  }
+  core.info(`Deleting the deployment ${outdated.id}`)
+  await deleteDeployment(octokit, { id: outdated.id })
 }
 
 type OutdatedDeployment = {
