@@ -88,7 +88,7 @@ type OutdatedDeployment = {
 export const findOutdated = (q: GetDeploymentsQuery): OutdatedDeployment[] => {
   assert(q.repository != null)
 
-  const outdated: OutdatedDeployment[] = []
+  const deployments: OutdatedDeployment[] = []
   for (const node of q.repository.deployments.nodes ?? []) {
     if (node == null) {
       continue
@@ -99,9 +99,17 @@ export const findOutdated = (q: GetDeploymentsQuery): OutdatedDeployment[] => {
     if (node.state == null) {
       continue
     }
-    if (node.ref == null) {
-      outdated.push({ id: node.id, databaseId: node.databaseId, state: node.state })
+    const deployment = { id: node.id, databaseId: node.databaseId, state: node.state }
+    // If the deployment refers to a ref which does not exist
+    if (node.ref == null || node.ref.target == null) {
+      deployments.push(deployment)
+      continue
+    }
+    // If the deployment refers to the outdated commit
+    if (node.commitOid !== node.ref.target.oid) {
+      deployments.push(deployment)
+      continue
     }
   }
-  return outdated
+  return deployments
 }

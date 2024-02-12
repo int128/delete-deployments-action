@@ -9,7 +9,7 @@ const query = /* GraphQL */ `
       cost
     }
     repository(owner: $owner, name: $name) {
-      deployments(first: 100, after: $after) {
+      deployments(first: 100, after: $after, orderBy: { field: CREATED_AT, direction: ASC }) {
         totalCount
         pageInfo {
           hasNextPage
@@ -20,8 +20,12 @@ const query = /* GraphQL */ `
           databaseId
           environment
           state
+          commitOid
           ref {
-            __typename
+            name
+            target {
+              oid
+            }
           }
         }
       }
