@@ -16,6 +16,7 @@ test('run successfully', () => {
               databaseId: 1,
               environment: 'app1',
               state: DeploymentState.Destroyed,
+              commitOid: '0123456789012345678901234567890123456789',
               ref: null,
             },
             {
@@ -23,6 +24,7 @@ test('run successfully', () => {
               databaseId: 2,
               environment: 'app2',
               state: DeploymentState.Active,
+              commitOid: '0123456789012345678901234567890123456789',
               ref: null,
             },
             {
@@ -30,8 +32,25 @@ test('run successfully', () => {
               databaseId: 3,
               environment: 'app3',
               state: DeploymentState.Inactive,
+              commitOid: '0123456789012345678901234567890123456789',
               ref: {
-                __typename: 'Ref',
+                name: 'main',
+                target: {
+                  oid: '0123456789012345678901234567890123456789',
+                },
+              },
+            },
+            {
+              id: 'DE_kwDOEx5AOc4n0004',
+              databaseId: 4,
+              environment: 'app4',
+              state: DeploymentState.Inactive,
+              commitOid: '0000000000000000000000000000000000000000',
+              ref: {
+                name: 'main',
+                target: {
+                  oid: '0123456789012345678901234567890123456789',
+                },
               },
             },
           ],
@@ -51,6 +70,11 @@ test('run successfully', () => {
       id: 'DE_kwDOEx5AOc4nK0td',
       databaseId: 2,
       state: DeploymentState.Active,
+    },
+    {
+      id: 'DE_kwDOEx5AOc4n0004',
+      databaseId: 4,
+      state: DeploymentState.Inactive,
     },
   ])
 })
