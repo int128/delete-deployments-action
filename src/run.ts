@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import * as octokitPluginRetry from '@octokit/plugin-retry'
 import { GetDeploymentsQuery, GetDeploymentsQueryVariables } from './generated/graphql'
 import { getDeployments } from './queries/getDeployments'
 import { deleteDeployment } from './queries/deleteDeployment'
@@ -16,7 +17,7 @@ type Inputs = {
 }
 
 export const run = async (inputs: Inputs): Promise<void> => {
-  const octokit = github.getOctokit(inputs.token)
+  const octokit = github.getOctokit(inputs.token, undefined, octokitPluginRetry.retry)
   if (inputs.batchDeletionRateLimit) {
     await deleteInBatch(octokit, inputs)
     return
