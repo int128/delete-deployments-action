@@ -1,31 +1,21 @@
 name: ts
 
 on:
-  push:
-    branches: [main]
+  pull_request:
     paths:
       - src/**
       - tests/**
       - '*.json'
-      - '*.lock'
-      - '*.lock'
-      - '*.lock'
-      - '*.lock'
-      - '*.lock'
       - '*.lock'
       - action.yaml
       - .github/workflows/ts.yaml
-  pull_request:
-    branches: [main]
+  push:
+    branches:
+      - main
     paths:
       - src/**
       - tests/**
       - '*.json'
-      - '*.lock'
-      - '*.lock'
-      - '*.lock'
-      - '*.lock'
-      - '*.lock'
       - '*.lock'
       - action.yaml
       - .github/workflows/ts.yaml
@@ -40,7 +30,6 @@ jobs:
           node-version: 20
       - run: corepack enable pnpm
       - run: pnpm i
-      - run: pnpm lint
       - run: pnpm test
       - run: pnpm build
 
@@ -59,5 +48,6 @@ jobs:
           node-version: 20
       - run: corepack enable pnpm
       - run: pnpm i
+      - run: pnpm lint --fix
       - run: pnpm format
       - uses: int128/update-generated-files-action@v2
