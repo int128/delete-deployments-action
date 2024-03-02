@@ -35,7 +35,7 @@ devDependencies:
     specifier: 14.58.0
     version: 14.58.0
   '@tsconfig/node20':
-    specifier: ^20.1.2
+    specifier: 20.1.2
     version: 20.1.2
   '@types/jest':
     specifier: 29.5.12
