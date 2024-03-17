@@ -1,16 +1,16 @@
 import * as Types from './graphql-types';
 
 export type DeleteDeploymentMutationVariables = Types.Exact<{
-  id: Types.Scalars['ID'];
+  id: Types.Scalars['ID']['input'];
 }>;
 
 
 export type DeleteDeploymentMutation = { __typename?: 'Mutation', deleteDeployment?: { __typename?: 'DeleteDeploymentPayload', clientMutationId?: string | null } | null };
 
 export type GetDeploymentsQueryVariables = Types.Exact<{
-  owner: Types.Scalars['String'];
-  name: Types.Scalars['String'];
-  after?: Types.InputMaybe<Types.Scalars['String']>;
+  owner: Types.Scalars['String']['input'];
+  name: Types.Scalars['String']['input'];
+  after?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
