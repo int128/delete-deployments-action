@@ -1,5 +1,5 @@
 import { GitHub } from '@actions/github/lib/utils'
-import { DeleteDeploymentMutation, DeleteDeploymentMutationVariables } from '../generated/graphql'
+import { DeleteDeploymentMutation, DeleteDeploymentMutationVariables } from '../generated/graphql.js'
 
 type Octokit = InstanceType<typeof GitHub>
 
