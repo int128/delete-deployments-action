@@ -1,10 +1,10 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import * as octokitPluginRetry from '@octokit/plugin-retry'
-import { GetDeploymentsQuery, GetDeploymentsQueryVariables } from './generated/graphql'
-import { getDeployments } from './queries/getDeployments'
-import { deleteDeployment } from './queries/deleteDeployment'
-import { DeploymentState } from './generated/graphql-types'
+import { GetDeploymentsQuery, GetDeploymentsQueryVariables } from './generated/graphql.js'
+import { getDeployments } from './queries/getDeployments.js'
+import { deleteDeployment } from './queries/deleteDeployment.js'
+import { DeploymentState } from './generated/graphql-types.js'
 import assert from 'assert'
 
 type Octokit = ReturnType<typeof github.getOctokit>

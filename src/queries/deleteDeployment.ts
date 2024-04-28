@@ -1,7 +1,7 @@
-import { GitHub } from '@actions/github/lib/utils'
-import { DeleteDeploymentMutation, DeleteDeploymentMutationVariables } from '../generated/graphql'
+import * as github from '@actions/github'
+import { DeleteDeploymentMutation, DeleteDeploymentMutationVariables } from '../generated/graphql.js'
 
-type Octokit = InstanceType<typeof GitHub>
+type Octokit = ReturnType<typeof github.getOctokit>
 
 const query = /* GraphQL */ `
   mutation deleteDeployment($id: ID!) {

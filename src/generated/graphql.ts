@@ -1,4 +1,4 @@
-import * as Types from './graphql-types';
+import * as Types from './graphql-types.js';
 
 export type DeleteDeploymentMutationVariables = Types.Exact<{
   id: Types.Scalars['ID']['input'];
