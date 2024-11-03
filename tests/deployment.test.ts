@@ -1,7 +1,7 @@
 import { DeploymentState } from '../src/generated/graphql-types.js'
-import { findOutdated } from '../src/run.js'
+import { findOutdated } from '../src/deployment.js'
 
-test('run successfully', () => {
+test('findOutdated', () => {
   expect(
     findOutdated({
       repository: {

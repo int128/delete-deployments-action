@@ -1,10 +1,11 @@
-import * as core from '@actions/core'
-import { getOctokit, Octokit } from './github.js'
-import { GetDeploymentsQuery, GetDeploymentsQueryVariables } from './generated/graphql.js'
-import { getDeployments } from './queries/getDeployments.js'
-import { deleteDeployment } from './queries/deleteDeployment.js'
-import { DeploymentState } from './generated/graphql-types.js'
 import assert from 'assert'
+import * as core from '@actions/core'
+import { deleteDeployment } from './queries/deleteDeployment.js'
+import { findOutdated, OutdatedDeployment } from './deployment.js'
+import { getOctokit, Octokit } from './github.js'
+import { getDeployments } from './queries/getDeployments.js'
+import { DeploymentState } from './generated/graphql-types.js'
+import { GetDeploymentsQueryVariables } from './generated/graphql.js'
 
 type Inputs = {
   batchDeletionRateLimit: number
@@ -75,39 +76,4 @@ const deleteOne = async (octokit: Octokit, v: GetDeploymentsQueryVariables, outd
   }
   core.info(`Deleting the deployment ${outdated.id}`)
   await deleteDeployment(octokit, { id: outdated.id })
-}
-
-type OutdatedDeployment = {
-  id: string
-  databaseId: number
-  state: DeploymentState
-}
-
-export const findOutdated = (q: GetDeploymentsQuery): OutdatedDeployment[] => {
-  assert(q.repository != null)
-
-  const deployments: OutdatedDeployment[] = []
-  for (const node of q.repository.deployments.nodes ?? []) {
-    if (node == null) {
-      continue
-    }
-    if (node.databaseId == null) {
-      continue
-    }
-    if (node.state == null) {
-      continue
-    }
-    const deployment = { id: node.id, databaseId: node.databaseId, state: node.state }
-    // If the deployment refers to a ref which does not exist
-    if (node.ref == null || node.ref.target == null) {
-      deployments.push(deployment)
-      continue
-    }
-    // If the deployment refers to the outdated commit
-    if (node.commitOid !== node.ref.target.oid) {
-      deployments.push(deployment)
-      continue
-    }
-  }
-  return deployments
 }
