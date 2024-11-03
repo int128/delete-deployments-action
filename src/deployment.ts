@@ -1,0 +1,38 @@
+import assert from 'assert'
+import { DeploymentState } from './generated/graphql-types.js'
+import { GetDeploymentsQuery } from './generated/graphql.js'
+
+export type OutdatedDeployment = {
+  id: string
+  databaseId: number
+  state: DeploymentState
+}
+
+export const findOutdated = (q: GetDeploymentsQuery): OutdatedDeployment[] => {
+  assert(q.repository != null)
+
+  const deployments: OutdatedDeployment[] = []
+  for (const node of q.repository.deployments.nodes ?? []) {
+    if (node == null) {
+      continue
+    }
+    if (node.databaseId == null) {
+      continue
+    }
+    if (node.state == null) {
+      continue
+    }
+    const deployment = { id: node.id, databaseId: node.databaseId, state: node.state }
+    // If the deployment refers to a ref which does not exist
+    if (node.ref == null || node.ref.target == null) {
+      deployments.push(deployment)
+      continue
+    }
+    // If the deployment refers to the outdated commit
+    if (node.commitOid !== node.ref.target.oid) {
+      deployments.push(deployment)
+      continue
+    }
+  }
+  return deployments
+}
