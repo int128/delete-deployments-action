@@ -67,13 +67,29 @@ const deleteOne = async (octokit: Octokit, v: GetDeploymentsQueryVariables, outd
     // An active deployment cannot be deleted directly.
     // https://docs.github.com/en/rest/deployments/deployments?apiVersion=2022-11-28#delete-a-deployment
     core.info(`Creating an inactive status before deleting the active deployment ${outdated.databaseId}`)
-    await octokit.rest.repos.createDeploymentStatus({
-      owner: v.owner,
-      repo: v.name,
-      deployment_id: outdated.databaseId,
-      state: 'inactive',
-    })
+    // Ignore 422 error: "This deployment has reached the maximum number of statuses."
+    await catchStatusError(
+      422,
+      octokit.rest.repos.createDeploymentStatus({
+        owner: v.owner,
+        repo: v.name,
+        deployment_id: outdated.databaseId,
+        state: 'inactive',
+      }),
+    )
   }
   core.info(`Deleting the deployment ${outdated.id}`)
   await deleteDeployment(octokit, { id: outdated.id })
+}
+
+const catchStatusError = async <T>(status: number, promise: Promise<T>): Promise<T | undefined> => {
+  try {
+    return await promise
+  } catch (e: unknown) {
+    if (typeof e === 'object' && e !== null && 'status' in e && typeof e.status === 'number' && e.status === status) {
+      return
+    } else {
+      throw e
+    }
+  }
 }
