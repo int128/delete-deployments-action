@@ -4,7 +4,7 @@ import { run } from './run.js'
 
 const main = async (): Promise<void> => {
   await run({
-    batchDeletionRateLimit: parseInt(core.getInput('batch-deletion-rate-limit')),
+    batchDeletionRateLimit: parseInt(core.getInput('batch-deletion-rate-limit', { required: true })),
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
     token: core.getInput('token', { required: true }),

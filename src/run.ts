@@ -16,11 +16,7 @@ type Inputs = {
 
 export const run = async (inputs: Inputs): Promise<void> => {
   const octokit = getOctokit(inputs.token)
-  if (inputs.batchDeletionRateLimit) {
-    await deleteInBatch(octokit, inputs)
-    return
-  }
-  await deletePerPage(octokit, { owner: inputs.owner, name: inputs.repo })
+  await deleteInBatch(octokit, inputs)
 }
 
 const deleteInBatch = async (octokit: Octokit, inputs: Inputs): Promise<void> => {

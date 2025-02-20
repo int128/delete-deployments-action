@@ -3,8 +3,9 @@ description: Delete the outdated Deployments
 
 inputs:
   batch-deletion-rate-limit:
-    description: If set, perform the batch deletion while the rate limit is remaining
-    required: false
+    description: Stop the batch deletion when the rate limit remaining is less than this value
+    required: true
+    default: 1000
   token:
     description: GitHub token
     required: true

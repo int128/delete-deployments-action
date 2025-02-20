@@ -35,26 +35,11 @@ For example, if a deployment meets the following conditions:
 - The deployment refers to `main` branch
 - The deployment refers to commit B, which is different from the commit of `main` branch
 
-## Batch deletion
-
-If a repository has a lot of deployments, try the batch deletion.
-
-```yaml
-jobs:
-  delete:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: int128/delete-deployments-action@v1
-        with:
-          # Perform the batch deletion while the rate limit remaining > 100
-          batch-deletion-rate-limit: 100
-```
-
 ## Specification
 
 ### Inputs
 
-| Name                        | Default        | Description                                                                 |
-| --------------------------- | -------------- | --------------------------------------------------------------------------- |
-| `batch-deletion-rate-limit` | -              | If set, perform the batch deletion until the rate limit remaining is enough |
-| `token`                     | `github.token` | GitHub token                                                                |
+| Name                        | Default        | Description                                                                   |
+| --------------------------- | -------------- | ----------------------------------------------------------------------------- |
+| `batch-deletion-rate-limit` | 1000           | Stop the batch deletion when the rate limit remaining is less than this value |
+| `token`                     | `github.token` | GitHub token                                                                  |
