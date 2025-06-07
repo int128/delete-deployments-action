@@ -1,7 +1,8 @@
+import { it, expect } from 'vitest'
 import { DeploymentState } from '../src/generated/graphql-types.js'
 import { findOutdated } from '../src/deployment.js'
 
-test('findOutdated', () => {
+it('findOutdated', () => {
   expect(
     findOutdated({
       repository: {
