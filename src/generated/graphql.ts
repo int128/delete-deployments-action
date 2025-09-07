@@ -14,4 +14,9 @@ export type GetDeploymentsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetDeploymentsQuery = { __typename?: 'Query', rateLimit?: { __typename?: 'RateLimit', cost: number } | null, repository?: { __typename?: 'Repository', deployments: { __typename?: 'DeploymentConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes?: Array<{ __typename?: 'Deployment', id: string, databaseId?: number | null, environment?: string | null, state?: Types.DeploymentState | null, commitOid: string, ref?: { __typename?: 'Ref', name: string, target?: { __typename?: 'Blob', oid: string } | { __typename?: 'Commit', oid: string } | { __typename?: 'Tag', oid: string } | { __typename?: 'Tree', oid: string } | null } | null } | null> | null } } | null };
+export type GetDeploymentsQuery = { __typename?: 'Query', rateLimit?: { __typename?: 'RateLimit', cost: number } | null, repository?: { __typename?: 'Repository', deployments: { __typename?: 'DeploymentConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes?: Array<{ __typename?: 'Deployment', id: string, databaseId?: number | null, environment?: string | null, state?: Types.DeploymentState | null, commitOid: string, ref?: { __typename?: 'Ref', name: string, target?:
+            | { __typename?: 'Blob', oid: string }
+            | { __typename?: 'Commit', oid: string }
+            | { __typename?: 'Tag', oid: string }
+            | { __typename?: 'Tree', oid: string }
+           | null } | null } | null> | null } } | null };
