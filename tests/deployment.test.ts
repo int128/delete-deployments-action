@@ -1,6 +1,6 @@
-import { it, expect } from 'vitest'
-import { DeploymentState } from '../src/generated/graphql-types.js'
+import { expect, it } from 'vitest'
 import { findOutdated } from '../src/deployment.js'
+import { DeploymentState } from '../src/generated/graphql-types.js'
 
 it('findOutdated', () => {
   expect(

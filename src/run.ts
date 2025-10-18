@@ -1,11 +1,11 @@
-import assert from 'assert'
+import assert from 'node:assert'
 import * as core from '@actions/core'
-import { deleteDeployment } from './queries/deleteDeployment.js'
-import { findOutdated, OutdatedDeployment } from './deployment.js'
-import { getOctokit, Octokit } from './github.js'
-import { getDeployments } from './queries/getDeployments.js'
+import { findOutdated, type OutdatedDeployment } from './deployment.js'
+import type { GetDeploymentsQueryVariables } from './generated/graphql.js'
 import { DeploymentState } from './generated/graphql-types.js'
-import { GetDeploymentsQueryVariables } from './generated/graphql.js'
+import { getOctokit, type Octokit } from './github.js'
+import { deleteDeployment } from './queries/deleteDeployment.js'
+import { getDeployments } from './queries/getDeployments.js'
 
 type Inputs = {
   batchDeletionRateLimit: number
