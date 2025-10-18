@@ -1,6 +1,6 @@
-import assert from 'assert'
-import { DeploymentState } from './generated/graphql-types.js'
-import { GetDeploymentsQuery } from './generated/graphql.js'
+import assert from 'node:assert'
+import type { GetDeploymentsQuery } from './generated/graphql.js'
+import type { DeploymentState } from './generated/graphql-types.js'
 
 export type OutdatedDeployment = {
   id: string
@@ -31,7 +31,6 @@ export const findOutdated = (q: GetDeploymentsQuery): OutdatedDeployment[] => {
     // If the deployment refers to the outdated commit
     if (node.commitOid !== node.ref.target.oid) {
       deployments.push(deployment)
-      continue
     }
   }
   return deployments

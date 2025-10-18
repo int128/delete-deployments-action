@@ -1,5 +1,5 @@
-import * as github from '@actions/github'
-import { DeleteDeploymentMutation, DeleteDeploymentMutationVariables } from '../generated/graphql.js'
+import type * as github from '@actions/github'
+import type { DeleteDeploymentMutation, DeleteDeploymentMutationVariables } from '../generated/graphql.js'
 
 type Octokit = ReturnType<typeof github.getOctokit>
 
@@ -13,5 +13,5 @@ const query = /* GraphQL */ `
 
 export const deleteDeployment = async (
   o: Octokit,
-  v: DeleteDeploymentMutationVariables
+  v: DeleteDeploymentMutationVariables,
 ): Promise<DeleteDeploymentMutation> => await o.graphql(query, v)
