@@ -1,25 +1,22 @@
 import assert from 'node:assert'
 import * as core from '@actions/core'
+import type { Octokit } from '@octokit/action'
 import { findOutdated, type OutdatedDeployment } from './deployment.js'
 import type { GetDeploymentsQueryVariables } from './generated/graphql.js'
 import { DeploymentState } from './generated/graphql-types.js'
-import { getOctokit, type Octokit } from './github.js'
+import type { Context } from './github.js'
 import { deleteDeployment } from './queries/deleteDeployment.js'
 import { getDeployments } from './queries/getDeployments.js'
 
 type Inputs = {
   batchDeletionRateLimit: number
-  owner: string
-  repo: string
-  token: string
 }
 
-export const run = async (inputs: Inputs): Promise<void> => {
-  const octokit = getOctokit(inputs.token)
-  await deleteInBatch(octokit, inputs)
+export const run = async (inputs: Inputs, octokit: Octokit, context: Context): Promise<void> => {
+  await deleteInBatch(inputs, octokit, context)
 }
 
-const deleteInBatch = async (octokit: Octokit, inputs: Inputs): Promise<void> => {
+const deleteInBatch = async (inputs: Inputs, octokit: Octokit, context: Context): Promise<void> => {
   core.info(`Starting the batch deletion`)
   for (let after: string | null | undefined; ; ) {
     const { data: rateLimit } = await octokit.rest.rateLimit.get()
@@ -35,7 +32,11 @@ const deleteInBatch = async (octokit: Octokit, inputs: Inputs): Promise<void> =>
       return
     }
 
-    const pageInfo = await deletePerPage(octokit, { owner: inputs.owner, name: inputs.repo, after })
+    const pageInfo = await deletePerPage(octokit, {
+      owner: context.repo.owner,
+      name: context.repo.repo,
+      after,
+    })
     if (!pageInfo.hasNextPage) {
       return
     }
