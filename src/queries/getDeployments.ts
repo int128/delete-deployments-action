@@ -1,7 +1,5 @@
-import type * as github from '@actions/github'
+import type { Octokit } from '@octokit/action'
 import type { GetDeploymentsQuery, GetDeploymentsQueryVariables } from '../generated/graphql.js'
-
-type Octokit = ReturnType<typeof github.getOctokit>
 
 const query = /* GraphQL */ `
   query getDeployments($owner: String!, $name: String!, $after: String) {
