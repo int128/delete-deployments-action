@@ -12,7 +12,7 @@ importers:
         specifier: 1.11.1
         version: 1.11.1
       '@octokit/action':
-        specifier: ^8.0.4
+        specifier: 8.0.4
         version: 8.0.4
       '@octokit/plugin-retry':
         specifier: 8.0.3
