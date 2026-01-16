@@ -65,16 +65,19 @@ it('findOutdated', () => {
     {
       id: 'DE_kwDOEx5AOc4nK0tU',
       databaseId: 1,
+      environment: 'app1',
       state: DeploymentState.Destroyed,
     },
     {
       id: 'DE_kwDOEx5AOc4nK0td',
       databaseId: 2,
+      environment: 'app2',
       state: DeploymentState.Active,
     },
     {
       id: 'DE_kwDOEx5AOc4n0004',
       databaseId: 4,
+      environment: 'app4',
       state: DeploymentState.Inactive,
     },
   ])
