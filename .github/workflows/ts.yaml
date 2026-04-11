@@ -37,7 +37,7 @@ jobs:
       - run: pnpm test
       - run: pnpm build
 
-      - uses: int128/deployment-action@a9096aa060729beecd8c8f92636c0991cafb9611 # v1.58.0
+      - uses: int128/deployment-action@ec4a673abde1ac7b08b4b08420316c7004cdbb19 # v1.59.0
       - name: e2e-test
         uses: ./
 
