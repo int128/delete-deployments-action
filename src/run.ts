@@ -77,6 +77,14 @@ const deleteOne = async (octokit: Octokit, v: GetDeploymentsQueryVariables, outd
   }
   core.info(`Deleting the deployment ${outdated.id}`)
   await deleteDeployment(octokit, { id: outdated.id })
+  if (outdated.environment) {
+    core.info(`Deleting the environment ${outdated.environment}`)
+    await octokit.rest.repos.deleteAnEnvironment({
+      owner: v.owner,
+      repo: v.name,
+      environment_name: outdated.environment,
+    })
+  }
 }
 
 const catchStatusError = async <T>(status: number, promise: Promise<T>): Promise<T | undefined> => {
