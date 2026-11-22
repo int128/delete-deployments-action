@@ -11,7 +11,7 @@ name: delete-outdated-deployments
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   delete:
